@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'BreadCrumbHeaders_Example' do
+  pod 'BreadCrumbHeaders', :path => '../'
+
+  target 'BreadCrumbHeaders_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
