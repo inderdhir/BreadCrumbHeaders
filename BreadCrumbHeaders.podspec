@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'BreadCrumbHeaders'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of BreadCrumbHeaders.'
+  s.summary          = 'Breadcrumb-like static headers used to group screens in a flow together.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,17 +18,19 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+BreadCrumbHeaders is designed to be used whenever you have a few screens that belong to a specific flow. Example, if you have a store checkout flow where you need to collect shipping and billing info, this can be used to notify the user what iss coming and how many steps are needed to complete the flow.
                        DESC
 
-  s.homepage         = 'https://github.com/Inder Dhir/BreadCrumbHeaders'
+  s.homepage         = 'https://github.com/inderdhir/BreadcrumbHeaders'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Inder Dhir' => 'inderdhir@hotmail.com' }
-  s.source           = { :git => 'https://github.com/Inder Dhir/BreadCrumbHeaders.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/inderdhir/BreadcrumbHeaders.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.swift_version    = '4.1'
+
+  s.ios.deployment_target = '10.0'
 
   s.source_files = 'BreadCrumbHeaders/Classes/**/*'
   
