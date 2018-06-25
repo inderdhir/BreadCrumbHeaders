@@ -11,8 +11,8 @@ import BreadCrumbHeaders
 
 class ViewController: UIViewController {
 
-    private let headers = BreadcrumbHeaders.initWithHeaders(
-        ["One".uppercased(), "Two".uppercased(), "Three".uppercased()]
+    private let headers = BreadcrumbHeaders(
+        headers: ["One".uppercased(), "Two".uppercased(), "Three".uppercased()]
     )
     
     override func viewDidLoad() {
@@ -22,15 +22,8 @@ class ViewController: UIViewController {
         headers.translatesAutoresizingMaskIntoConstraints = false
         headers.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         headers.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        headers.topAnchor.constraint(
-            equalTo: view.topAnchor,
-            constant: 50).isActive = true
+        headers.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
         headers.heightAnchor.constraint(equalToConstant: 25).isActive = true
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
 
