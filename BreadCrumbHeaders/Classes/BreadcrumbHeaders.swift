@@ -45,28 +45,32 @@ public class BreadcrumbHeaders: UIView {
         }
     }
 
+    public var count: Int {
+        return headers.count
+    }
+
     public var selectedIndex: Int = 0 {
         didSet {
-            guard selectedIndex < headers.count else {
+            guard selectedIndex < count else {
                 fatalError("Selected index is out of bounds")
             }
 
             breadcrumbView.selectedIndex = selectedIndex
-            setNeedsDisplay()
+            breadcrumbView.setNeedsDisplay()
         }
     }
 
     public var itemCompleteColor: UIColor = .black {
         didSet {
             breadcrumbView.itemCompleteColor = itemCompleteColor
-            setNeedsDisplay()
+            breadcrumbView.setNeedsDisplay()
         }
     }
 
     public var itemIncompleteColor: UIColor = .gray {
         didSet {
             breadcrumbView.itemIncompleteColor = itemIncompleteColor
-            setNeedsDisplay()
+            breadcrumbView.setNeedsDisplay()
         }
     }
 
@@ -106,7 +110,6 @@ public class BreadcrumbHeaders: UIView {
         )
 
         super.init(frame: .zero)
-        isUserInteractionEnabled = false
 
         addSubview(breadcrumbView)
         for header in headers {
@@ -133,7 +136,7 @@ public class BreadcrumbHeaders: UIView {
         breadcrumbView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         breadcrumbView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
 
-        let width: CGFloat = bounds.width * (1 / CGFloat(headers.count))
+        let width: CGFloat = bounds.width * (1 / CGFloat(count))
         var lastAddedView: UIView?
         for addedView in addedViews {
             addedView.translatesAutoresizingMaskIntoConstraints = false

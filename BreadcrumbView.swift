@@ -46,7 +46,6 @@ class BreadcrumbView: UIView {
     }
 
     override func draw(_ rect: CGRect) {
-
         breadcrumbsBackground.setFill()
         UIRectFill(rect)
 
