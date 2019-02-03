@@ -8,29 +8,37 @@
 
 import UIKit
 
+/// Draws breadcrumbs with header labels on top on them
 public class BreadcrumbHeaders: UIView {
 
-    public var breadcrumbsBackground = UIColor.white {
+    /// Total breadcrumb count
+     public let count: Int
+
+    /// Background for the breadcrumbs. This is the color that will show up if there are gaps between them
+    public var spacingBackgroundColor = UIColor.white {
         didSet {
-            breadcrumbView.breadcrumbsBackground = breadcrumbsBackground
+            breadcrumbView.spacingBackgroundColor = spacingBackgroundColor
             breadcrumbView.setNeedsDisplay()
         }
     }
 
-    public var straightBeginning = true {
+    /// Whether the first breadcrumb has an arrow at the start (like the end). Default: false
+    public var isArrowAtStartEnabled = false {
         didSet {
-            breadcrumbView.straightBeginning = straightBeginning
+            breadcrumbView.isArrowAtStartEnabled = isArrowAtStartEnabled
             breadcrumbView.setNeedsDisplay()
         }
     }
 
-    public var straightEnd = false {
+    /// Whether the breadcrumbs have an arrow at the end. Default: true
+    public var isArrowAtEndEnabled = true {
         didSet {
-            breadcrumbView.straightEnd = straightEnd
+            breadcrumbView.isArrowAtEndEnabled = isArrowAtEndEnabled
             breadcrumbView.setNeedsDisplay()
         }
     }
 
+    /// Width of the arrow at the start(if enabled) end for the breadcrumbs. Default: 5
     public var widthOfArrow: CGFloat = 5 {
         didSet {
             breadcrumbView.widthOfArrow = widthOfArrow
@@ -38,6 +46,7 @@ public class BreadcrumbHeaders: UIView {
         }
     }
 
+    /// Spacing between the breadcrumbs. Default: 2
     public var spacingBetweenItems: CGFloat = 2 {
         didSet {
             breadcrumbView.spacingBetweenItems = spacingBetweenItems
@@ -45,11 +54,10 @@ public class BreadcrumbHeaders: UIView {
         }
     }
 
-    public var count: Int { return headers.count }
-
+    /// Selected index for the breadcrumbs. Default: 0
     public var selectedIndex = 0 {
         didSet {
-            guard selectedIndex < count else {
+            guard selectedIndex < headers.count else {
                 fatalError("Selected index is out of bounds")
             }
 
@@ -58,6 +66,7 @@ public class BreadcrumbHeaders: UIView {
         }
     }
 
+    /// Background color for a completed breadcrumb. Default: UIColor.black
     public var itemCompleteColor = UIColor.black {
         didSet {
             breadcrumbView.itemCompleteColor = itemCompleteColor
@@ -65,6 +74,7 @@ public class BreadcrumbHeaders: UIView {
         }
     }
 
+    /// Background color for an incomplete breadcrumb. Default: UIColor.gray
     public var itemIncompleteColor = UIColor.gray {
         didSet {
             breadcrumbView.itemIncompleteColor = itemIncompleteColor
@@ -72,8 +82,10 @@ public class BreadcrumbHeaders: UIView {
         }
     }
 
+    /// View to draw the breadcrumbs
     private let breadcrumbView: BreadcrumbView
 
+    /// UILabel Template to draw the headers.
     private func headerLabel() -> UILabel {
         let label = UILabel()
         label.font = UIFont(name: "Helvetica-Bold", size: 12)
@@ -82,20 +94,23 @@ public class BreadcrumbHeaders: UIView {
         return label
     }
 
+    /// Header names
     private let headers: [String]
-    private var addedViews: [UIView] = []
+
+    /// Keeps track of the header labels for positioning
+    private var headerLabels: [UIView] = []
 
     public init(
         headers: [String],
         headerLabel: (() -> UILabel)? = nil
         ) {
         self.headers = headers
+        self.count = headers.count
         breadcrumbView = BreadcrumbView(
             headers: headers,
-            breadcrumbsBackground: breadcrumbsBackground,
-            straightBeginning: straightBeginning,
-            straightEnd: straightEnd,
-            totalCount: headers.count,
+            breadcrumbsBackground: spacingBackgroundColor,
+            straightBeginning: isArrowAtStartEnabled,
+            straightEnd: isArrowAtEndEnabled,
             widthOfArrow: widthOfArrow,
             spacingBetweenItems: spacingBetweenItems,
             itemCompleteColor: itemCompleteColor,
@@ -106,10 +121,11 @@ public class BreadcrumbHeaders: UIView {
 
         addSubview(breadcrumbView)
         headers.forEach { [weak self] header in
-            let addedView = headerLabel?() ?? constructView()
-            addedView.text = header
-            addSubview(addedView)
-            self?.addedViews.append(addedView)
+            let addedView = headerLabel?() ?? self?.headerLabel()
+            guard let labelView = addedView  else { return }
+            labelView.text = header
+            addSubview(labelView)
+            self?.headerLabels.append(labelView)
         }
     }
 
@@ -131,9 +147,9 @@ public class BreadcrumbHeaders: UIView {
             breadcrumbView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
 
-        let width: CGFloat = bounds.width * (1 / CGFloat(count))
+        let width: CGFloat = bounds.width * (1 / CGFloat(headers.count))
         var lastAddedView: UIView?
-        addedViews.forEach { addedView in
+        headerLabels.forEach { addedView in
             addedView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 addedView.leadingAnchor.constraint(
@@ -146,12 +162,5 @@ public class BreadcrumbHeaders: UIView {
 
             lastAddedView = addedView
         }
-    }
-
-    private func constructView() -> UILabel {
-        let label = UILabel()
-        label.textColor = .white
-        label.textAlignment = .center
-        return label
     }
 }

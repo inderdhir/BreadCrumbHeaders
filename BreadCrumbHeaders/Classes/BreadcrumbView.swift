@@ -7,11 +7,10 @@
 
 class BreadcrumbView: UIView {
 
-    private let totalCount: Int
     let headers: [String]
-    var breadcrumbsBackground: UIColor
-    var straightBeginning: Bool
-    var straightEnd: Bool
+    var spacingBackgroundColor: UIColor
+    var isArrowAtStartEnabled: Bool
+    var isArrowAtEndEnabled: Bool
     var widthOfArrow: CGFloat
     var spacingBetweenItems: CGFloat
     var selectedIndex: Int
@@ -23,7 +22,6 @@ class BreadcrumbView: UIView {
         breadcrumbsBackground: UIColor,
         straightBeginning: Bool,
         straightEnd: Bool,
-        totalCount: Int,
         widthOfArrow: CGFloat,
         spacingBetweenItems: CGFloat,
         itemCompleteColor: UIColor,
@@ -31,10 +29,9 @@ class BreadcrumbView: UIView {
         ) {
 
         self.headers = headers
-        self.breadcrumbsBackground = breadcrumbsBackground
-        self.straightBeginning = straightBeginning
-        self.straightEnd = straightEnd
-        self.totalCount = totalCount
+        self.spacingBackgroundColor = breadcrumbsBackground
+        self.isArrowAtStartEnabled = straightBeginning
+        self.isArrowAtEndEnabled = straightEnd
         self.widthOfArrow = widthOfArrow
         self.spacingBetweenItems = spacingBetweenItems
         self.itemCompleteColor = itemCompleteColor
@@ -49,17 +46,17 @@ class BreadcrumbView: UIView {
     }
 
     override func draw(_ rect: CGRect) {
-        breadcrumbsBackground.setFill()
+        spacingBackgroundColor.setFill()
         UIRectFill(rect)
 
-        let interval = 1 / CGFloat(totalCount)
+        let interval = 1 / CGFloat(headers.count)
         let midPointY = (rect.minY + rect.maxY) * 0.5
         var drawRatio: CGFloat = 0
         var spacing: CGFloat
-        for index in 0..<totalCount {
+        for index in 0..<headers.count {
             spacing = index == 0 ? 0 : spacingBetweenItems
 
-            if index == totalCount - 1 {
+            if index == headers.count - 1 {
                 drawRatio = 1
             } else {
                 drawRatio += interval
@@ -79,7 +76,7 @@ class BreadcrumbView: UIView {
             let arrowEndX = arrowStartX + widthOfArrow
 
             path.move(to: CGPoint(x: startingX, y: rect.minY))
-            if index == totalCount - 1 && straightEnd {
+            if index == headers.count - 1 && !isArrowAtEndEnabled {
                 path.addLine(to: CGPoint(x: arrowEndX, y: rect.minY))
                 path.addLine(to: CGPoint(x: arrowEndX, y: rect.maxY))
             } else {
@@ -88,7 +85,7 @@ class BreadcrumbView: UIView {
                 path.addLine(to: CGPoint(x: arrowStartX, y: rect.maxY))
             }
             path.addLine(to: CGPoint(x: startingX, y: rect.maxY))
-            if index != 0 || (index == 0 && !straightBeginning) {
+            if index != 0 || (index == 0 && isArrowAtStartEnabled) {
                 path.addLine(
                     to: CGPoint(
                         x: startingX + widthOfArrow,

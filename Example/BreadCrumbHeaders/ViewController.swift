@@ -33,16 +33,20 @@ class ViewController: UIViewController {
         nextButton.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
 
         headers.translatesAutoresizingMaskIntoConstraints = false
-        headers.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        headers.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        headers.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
-        headers.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        NSLayoutConstraint.activate([
+            headers.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            headers.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            headers.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            headers.heightAnchor.constraint(equalToConstant: 35)
+        ])
 
         nextButton.translatesAutoresizingMaskIntoConstraints = false
-        nextButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        nextButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+        NSLayoutConstraint.activate([
+            nextButton.widthAnchor.constraint(equalToConstant: 200),
+            nextButton.heightAnchor.constraint(equalToConstant: 50),
+            nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50)
+        ])
     }
 
     @objc func nextTapped() {
