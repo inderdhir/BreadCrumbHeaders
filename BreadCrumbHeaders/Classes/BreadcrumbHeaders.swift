@@ -6,50 +6,48 @@
 //  Copyright (c) 2018 Inder Dhir. All rights reserved.
 //
 
-public class BreadcrumbHeaders: UIView {
+import UIKit
 
-    // Public properties
+public class BreadcrumbHeaders: UIView {
 
     public var breadcrumbsBackground = UIColor.white {
         didSet {
             breadcrumbView.breadcrumbsBackground = breadcrumbsBackground
-            setNeedsDisplay()
+            breadcrumbView.setNeedsDisplay()
         }
     }
 
     public var straightBeginning = true {
         didSet {
             breadcrumbView.straightBeginning = straightBeginning
-            setNeedsDisplay()
+            breadcrumbView.setNeedsDisplay()
         }
     }
 
     public var straightEnd = false {
         didSet {
             breadcrumbView.straightEnd = straightEnd
-            setNeedsDisplay()
+            breadcrumbView.setNeedsDisplay()
         }
     }
 
     public var widthOfArrow: CGFloat = 5 {
         didSet {
             breadcrumbView.widthOfArrow = widthOfArrow
-            setNeedsDisplay()
+            breadcrumbView.setNeedsDisplay()
         }
     }
 
     public var spacingBetweenItems: CGFloat = 2 {
         didSet {
             breadcrumbView.spacingBetweenItems = spacingBetweenItems
-            setNeedsDisplay()
+            breadcrumbView.setNeedsDisplay()
         }
     }
 
-    public var count: Int {
-        return headers.count
-    }
+    public var count: Int { return headers.count }
 
-    public var selectedIndex: Int = 0 {
+    public var selectedIndex = 0 {
         didSet {
             guard selectedIndex < count else {
                 fatalError("Selected index is out of bounds")
@@ -60,21 +58,19 @@ public class BreadcrumbHeaders: UIView {
         }
     }
 
-    public var itemCompleteColor: UIColor = .black {
+    public var itemCompleteColor = UIColor.black {
         didSet {
             breadcrumbView.itemCompleteColor = itemCompleteColor
             breadcrumbView.setNeedsDisplay()
         }
     }
 
-    public var itemIncompleteColor: UIColor = .gray {
+    public var itemIncompleteColor = UIColor.gray {
         didSet {
             breadcrumbView.itemIncompleteColor = itemIncompleteColor
             breadcrumbView.setNeedsDisplay()
         }
     }
-
-    // Private
 
     private let breadcrumbView: BreadcrumbView
 
@@ -89,16 +85,13 @@ public class BreadcrumbHeaders: UIView {
     private let headers: [String]
     private var addedViews: [UIView] = []
 
-    private func constructView() -> UILabel {
-        let label = UILabel()
-        label.textColor = .white
-        label.textAlignment = .center
-        return label
-    }
-
-    public init(headers: [String]) {
+    public init(
+        headers: [String],
+        headerLabel: (() -> UILabel)? = nil
+        ) {
         self.headers = headers
         breadcrumbView = BreadcrumbView(
+            headers: headers,
             breadcrumbsBackground: breadcrumbsBackground,
             straightBeginning: straightBeginning,
             straightEnd: straightEnd,
@@ -112,11 +105,11 @@ public class BreadcrumbHeaders: UIView {
         super.init(frame: .zero)
 
         addSubview(breadcrumbView)
-        for header in headers {
-            let addedView = constructView()
+        headers.forEach { [weak self] header in
+            let addedView = headerLabel?() ?? constructView()
             addedView.text = header
             addSubview(addedView)
-            addedViews.append(addedView)
+            self?.addedViews.append(addedView)
         }
     }
 
@@ -124,31 +117,41 @@ public class BreadcrumbHeaders: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override public func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         setupConstraints()
     }
 
     private func setupConstraints() {
         breadcrumbView.translatesAutoresizingMaskIntoConstraints = false
-        breadcrumbView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        breadcrumbView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        breadcrumbView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        breadcrumbView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            breadcrumbView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            breadcrumbView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            breadcrumbView.topAnchor.constraint(equalTo: topAnchor),
+            breadcrumbView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
 
         let width: CGFloat = bounds.width * (1 / CGFloat(count))
         var lastAddedView: UIView?
-        for addedView in addedViews {
+        addedViews.forEach { addedView in
             addedView.translatesAutoresizingMaskIntoConstraints = false
-            addedView.leadingAnchor.constraint(
-                equalTo: lastAddedView?.trailingAnchor ?? leadingAnchor
-            ).isActive = true
-            addedView.widthAnchor.constraint(equalToConstant: width).isActive = true
-            addedView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-            addedView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-            addedView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+            NSLayoutConstraint.activate([
+                addedView.leadingAnchor.constraint(
+                    equalTo: lastAddedView?.trailingAnchor ?? leadingAnchor
+                ),
+                addedView.widthAnchor.constraint(equalToConstant: width),
+                addedView.heightAnchor.constraint(equalTo: heightAnchor),
+                addedView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
 
             lastAddedView = addedView
         }
+    }
+
+    private func constructView() -> UILabel {
+        let label = UILabel()
+        label.textColor = .white
+        label.textAlignment = .center
+        return label
     }
 }

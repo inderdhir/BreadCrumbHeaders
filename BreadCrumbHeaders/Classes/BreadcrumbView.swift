@@ -8,6 +8,7 @@
 class BreadcrumbView: UIView {
 
     private let totalCount: Int
+    let headers: [String]
     var breadcrumbsBackground: UIColor
     var straightBeginning: Bool
     var straightEnd: Bool
@@ -18,6 +19,7 @@ class BreadcrumbView: UIView {
     var itemIncompleteColor: UIColor
 
     init(
+        headers: [String],
         breadcrumbsBackground: UIColor,
         straightBeginning: Bool,
         straightEnd: Bool,
@@ -28,6 +30,7 @@ class BreadcrumbView: UIView {
         itemIncompleteColor: UIColor
         ) {
 
+        self.headers = headers
         self.breadcrumbsBackground = breadcrumbsBackground
         self.straightBeginning = straightBeginning
         self.straightEnd = straightEnd

@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  BreadCrumbHeaders: 51e6a0b8c5e72b1acd51c312880ba714f4dc93dd
+  BreadCrumbHeaders: af1c8e77eb35a4a17b57e05d55236203a47130ad
 
 PODFILE CHECKSUM: b0aa8ddf7d3d3ad5fc645808be604cefb51f3103
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.3
