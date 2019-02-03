@@ -1,9 +1,6 @@
 # BreadCrumbHeaders
 
-[![CI Status](https://img.shields.io/travis/Inder Dhir/BreadCrumbHeaders.svg?style=flat)](https://travis-ci.org/Inder Dhir/BreadCrumbHeaders)
-[![Version](https://img.shields.io/cocoapods/v/BreadCrumbHeaders.svg?style=flat)](https://cocoapods.org/pods/BreadCrumbHeaders)
-[![License](https://img.shields.io/cocoapods/l/BreadCrumbHeaders.svg?style=flat)](https://cocoapods.org/pods/BreadCrumbHeaders)
-[![Platform](https://img.shields.io/cocoapods/p/BreadCrumbHeaders.svg?style=flat)](https://cocoapods.org/pods/BreadCrumbHeaders)
+![Example](example.gif)
 
 ## Example
 
