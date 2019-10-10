@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'BreadCrumbHeaders'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'Breadcrumb-like static headers for iOS used to group screens into a flow.'
 
 # This description is used to generate tags and improve search results.

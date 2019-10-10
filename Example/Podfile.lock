@@ -1,5 +1,5 @@
 PODS:
-  - BreadCrumbHeaders (1.0.1)
+  - BreadCrumbHeaders (1.0.2)
 
 DEPENDENCIES:
   - BreadCrumbHeaders (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  BreadCrumbHeaders: 74c107db832f8be41299cdb1c5d75c164bdcb79d
+  BreadCrumbHeaders: 997530604ce900a55de1326e3f899c1c663e6858
 
 PODFILE CHECKSUM: b0aa8ddf7d3d3ad5fc645808be604cefb51f3103
 
-COCOAPODS: 1.7.1
+COCOAPODS: 1.8.3
