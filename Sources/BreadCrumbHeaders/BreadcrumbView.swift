@@ -5,7 +5,10 @@
 //  Created by Inder Dhir on 6/24/18.
 //
 
-class BreadcrumbView: UIView {
+import UIKit
+import Foundation
+
+final class BreadcrumbView: UIView {
 
     let headers: [String]
     var spacingBackgroundColor: UIColor

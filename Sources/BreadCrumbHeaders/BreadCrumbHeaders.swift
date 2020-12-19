@@ -9,7 +9,7 @@
 import UIKit
 
 /// Draws breadcrumbs with header labels on top on them
-public class BreadcrumbHeaders: UIView {
+public final class BreadcrumbHeaders: UIView {
 
     /// Total breadcrumb count
      public let count: Int

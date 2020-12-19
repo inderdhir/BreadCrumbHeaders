@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         button.titleLabel?.textColor = .white
         return button
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
