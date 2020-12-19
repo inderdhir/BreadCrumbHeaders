@@ -12,7 +12,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ### Swift Package Manager
 
-StagLayout is now available as a Swift package.
+BreadCrumbHeaders is now available as a Swift package.
 
 ### Cocoapods
 
