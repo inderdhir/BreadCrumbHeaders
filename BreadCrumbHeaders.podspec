@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'BreadCrumbHeaders'
-  s.version          = '1.0.2'
+  s.version          = '1.1.0'
   s.summary          = 'Breadcrumb-like static headers for iOS used to group screens into a flow.'
   s.description      = <<-DESC
 BreadCrumbHeaders is designed to be used whenever you have a few screens that belong to a specific flow. Example, if you have a store checkout flow where you need to collect shipping and billing info, this can be used to notify the user what iss coming and how many steps are needed to complete the flow.
